@@ -79,6 +79,7 @@ def run(config, prompts=None):
             response_text = response_text.strip()
 
         data = json.loads(response_text)
+        # Geminiがリストで返す場合があるので先頭要素を取得
         if isinstance(data, list):
             data = data[0]
         category = data["category"]
@@ -93,7 +94,7 @@ def run(config, prompts=None):
     logger.info("ステップ2: 記事生成")
     try:
         from blog_engine.article_generator import ArticleGenerator
-        from seo_optimizer import PharmaDxSEOOptimizer
+        from seo_optimizer import SEOOptimizer
 
         generator = ArticleGenerator(config)
         article = generator.generate_article(
@@ -101,7 +102,7 @@ def run(config, prompts=None):
         )
         logger.info("記事生成完了: %s", article.get("title", "不明"))
 
-        optimizer = PharmaDxSEOOptimizer(config)
+        optimizer = SEOOptimizer(config)
         seo_result = optimizer.check_seo_score(article)
         article["seo_score"] = seo_result.get("total_score", 0)
         logger.info("SEOスコア: %d/100", article["seo_score"])
@@ -139,8 +140,8 @@ def run(config, prompts=None):
     # ステップ3: サイトビルド
     logger.info("ステップ3: サイトビルド")
     try:
-        from site_generator import PharmaDxSiteGenerator
-        site_gen = PharmaDxSiteGenerator(config)
+        from site_generator import SiteGenerator
+        site_gen = SiteGenerator(config)
         site_gen.build_site()
         logger.info("サイトビルド完了")
     except Exception as e:
