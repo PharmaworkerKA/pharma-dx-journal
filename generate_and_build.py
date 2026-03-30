@@ -107,10 +107,14 @@ def run(config, prompts=None):
         article["seo_score"] = seo_result.get("total_score", 0)
         logger.info("SEOスコア: %d/100", article["seo_score"])
 
-        # JSON-LD構造化データを記事に追加
-        jsonld_scripts = optimizer.generate_all_jsonld(article)
-        article["jsonld"] = jsonld_scripts
-        logger.info("JSON-LD構造化データ: %d件生成", len(jsonld_scripts))
+        # JSON-LD構造化データを記事に追加（メソッドが存在する場合のみ）
+        if hasattr(optimizer, "generate_all_jsonld"):
+            jsonld_scripts = optimizer.generate_all_jsonld(article)
+            article["jsonld"] = jsonld_scripts
+            logger.info("JSON-LD構造化データ: %d件生成", len(jsonld_scripts))
+        else:
+            article["jsonld"] = []
+            logger.info("JSON-LD生成をスキップ（generate_all_jsonldメソッド未実装）")
 
     except Exception as e:
         logger.error("記事生成に失敗: %s", e)
