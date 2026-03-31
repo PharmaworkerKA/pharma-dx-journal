@@ -5,7 +5,7 @@
     <link>https://musclelove-777.github.io/pharma-dx-journal</link>
     <description>製薬業界のデジタルトランスフォーメーション（DX）最新動向を毎日更新。海外のAI創薬・DCT・RWD活用の最新トレンドを日本語で翻訳・要約し実践的に解説。</description>
     <language>ja</language>
-    <lastBuildDate>Mon, 30 Mar 2026 00:16:25 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2026 05:06:35 +0900</lastBuildDate>
     <atom:link href="https://musclelove-777.github.io/pharma-dx-journal/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>GAMP5 CSAで加速！製薬DXの新バリデーション戦略</title>
@@ -13,7 +13,15 @@
       <guid>https://musclelove-777.github.io/pharma-dx-journal/articles/gamp5-csa-pharma-dx-validation-strategy.html</guid>
       <description></description>
       <category>CSV・規制対応DX</category>
-      <pubDate>Mon, 30 Mar 2026 00:00:00 +0900</pubDate>
+      <pubDate>Tue, 31 Mar 2026 00:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>AI創薬と生成AI最前線：日本の製薬DXを加速</title>
+      <link>https://musclelove-777.github.io/pharma-dx-journal/articles/ai-drug-discovery-generative-ai-latest-trends-jp.html</link>
+      <guid>https://musclelove-777.github.io/pharma-dx-journal/articles/ai-drug-discovery-generative-ai-latest-trends-jp.html</guid>
+      <description></description>
+      <category>AI創薬・機械学習</category>
+      <pubDate>Tue, 31 Mar 2026 00:00:00 +0900</pubDate>
     </item>
   </channel>
 </rss>
