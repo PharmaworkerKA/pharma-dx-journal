@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>製薬DXジャーナル</title>
+    <link>https://musclelove-777.github.io/pharma-dx-journal</link>
+    <description>製薬業界のデジタルトランスフォーメーション（DX）最新動向を毎日更新。海外のAI創薬・DCT・RWD活用の最新トレンドを日本語で翻訳・要約し実践的に解説。</description>
+    <language>ja</language>
+    <lastBuildDate>Fri, 03 Apr 2026 05:01:57 +0900</lastBuildDate>
+    <atom:link href="https://musclelove-777.github.io/pharma-dx-journal/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>GAMP5 CSAで加速！製薬DXの新バリデーション戦略</title>
+      <link>https://musclelove-777.github.io/pharma-dx-journal/articles/gamp5-csa-pharma-dx-validation-strategy.html</link>
+      <guid>https://musclelove-777.github.io/pharma-dx-journal/articles/gamp5-csa-pharma-dx-validation-strategy.html</guid>
+      <description></description>
+      <category>CSV・規制対応DX</category>
+      <pubDate>Fri, 03 Apr 2026 00:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>AI創薬と生成AI最前線：日本の製薬DXを加速</title>
+      <link>https://musclelove-777.github.io/pharma-dx-journal/articles/ai-drug-discovery-generative-ai-latest-trends-jp.html</link>
+      <guid>https://musclelove-777.github.io/pharma-dx-journal/articles/ai-drug-discovery-generative-ai-latest-trends-jp.html</guid>
+      <description></description>
+      <category>AI創薬・機械学習</category>
+      <pubDate>Fri, 03 Apr 2026 00:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>「生成AI創薬」最前線：新薬開発を加速する秘訣</title>
+      <link>https://musclelove-777.github.io/pharma-dx-journal/articles/generative-ai-drug-discovery-trends.html</link>
+      <guid>https://musclelove-777.github.io/pharma-dx-journal/articles/generative-ai-drug-discovery-trends.html</guid>
+      <description></description>
+      <category>AI創薬・機械学習</category>
+      <pubDate>Fri, 03 Apr 2026 00:00:00 +0900</pubDate>
+    </item>
+    <item>
+      <title>生成AI創薬最前線：新薬開発を加速する最新動向</title>
+      <link>https://musclelove-777.github.io/pharma-dx-journal/articles/ai.html</link>
+      <guid>https://musclelove-777.github.io/pharma-dx-journal/articles/ai.html</guid>
+      <description></description>
+      <category>AI創薬・機械学習</category>
+      <pubDate>Fri, 03 Apr 2026 00:00:00 +0900</pubDate>
+    </item>
+  </channel>
+</rss>
