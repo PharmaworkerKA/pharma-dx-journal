@@ -64,8 +64,8 @@ def run(config, prompts=None):
                 err_str = str(api_err)
                 if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
                     if attempt < max_retries:
-                        wait = 30 * attempt
-                        logger.warning("レートリミット検出、%d秒待機（試行%d/%d）", wait, attempt, max_retries)
+                        wait = 30 * (2 ** (attempt - 1))
+                        logger.warning("レートリミット検出、%d秒待機（試行%d/%d、エクスポーネンシャルバックオフ）", wait, attempt, max_retries)
                         time.sleep(wait)
                         continue
                 raise

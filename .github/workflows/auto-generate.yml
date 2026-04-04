@@ -20,7 +20,7 @@ jobs:
       - name: blog_engineをチェックアウト
         uses: actions/checkout@v4
         with:
-          repository: MuscleLove-777/blog-engine
+          repository: PharmaworkerKA/blog-engine
           path: blog_engine
           token: ${{ secrets.GITHUB_TOKEN }}
 

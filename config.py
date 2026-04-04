@@ -9,11 +9,11 @@ BLOG_DESCRIPTION = (
     "製薬業界のデジタルトランスフォーメーション（DX）最新動向を毎日更新。"
     "海外のAI創薬・DCT・RWD活用の最新トレンドを日本語で翻訳・要約し実践的に解説。"
 )
-BLOG_URL = "https://musclelove-777.github.io/pharma-dx-journal"
+BLOG_URL = "https://pharmaworkerka.github.io/pharma-dx-journal"
 BLOG_TAGLINE = "製薬DXの最新トレンドを日本語で毎日発信"
 BLOG_LANGUAGE = "ja"
 
-GITHUB_REPO = "MuscleLove-777/pharma-dx-journal"
+GITHUB_REPO = "PharmaworkerKA/pharma-dx-journal"
 GITHUB_BRANCH = "gh-pages"
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 
