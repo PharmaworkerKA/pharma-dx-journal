@@ -2,49 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pharmaworkerka.github.io/pharma-dx-journal</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://pharmaworkerka.github.io/pharma-dx-journal/articles/gamp5-csa-pharma-dx-validation-strategy.html</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pharmaworkerka.github.io/pharma-dx-journal/articles/ai-drug-discovery-generative-ai-latest-trends-jp.html</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pharmaworkerka.github.io/pharma-dx-journal/articles/gamp5-second-edition-pharma-csv-strategy.html</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pharmaworkerka.github.io/pharma-dx-journal/articles/generative-ai-drug-discovery-pharma-dx.html</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pharmaworkerka.github.io/pharma-dx-journal/articles/ai-drug-discovery-generative-ai.html</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-04-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pharmaworkerka.github.io/pharma-dx-journal/articles/ai-drug-discovery-generative-ai.html</loc>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pharmaworkerka.github.io/pharma-dx-journal/category/CSV%E3%83%BB%E8%A6%8F%E5%88%B6%E5%AF%BE%E5%BF%9CDX.html</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://pharmaworkerka.github.io/pharma-dx-journal/category/AI%E5%89%B5%E8%96%AC%E3%83%BB%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92.html</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
