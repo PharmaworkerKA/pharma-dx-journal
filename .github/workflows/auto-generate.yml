@@ -2,16 +2,20 @@ name: Pharma DX Journal - Auto Generate
 
 on:
   schedule:
-    # 毎日 JST 12:00 (UTC 3:00) - API費用削減のため1日1回に変更
     - cron: '0 3 * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
   pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  generate-and-deploy:
+  generate:
     runs-on: ubuntu-latest
     steps:
       - name: リポジトリをチェックアウト
@@ -20,7 +24,7 @@ jobs:
       - name: blog_engineをチェックアウト
         uses: actions/checkout@v4
         with:
-          repository: PharmaworkerKA/blog-engine
+          repository: MuscleLove-777/blog-engine
           path: blog_engine
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -45,9 +49,18 @@ jobs:
           git diff --staged --quiet || git commit -m "記事自動生成: $(date '+%Y-%m-%d %H:%M')"
           git push
 
-      - name: GitHub Pages にデプロイ
-        uses: peaceiris/actions-gh-pages@v3
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./output/site
-          publish_branch: gh-pages
+          path: ./output/site
+
+  deploy:
+    needs: generate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
