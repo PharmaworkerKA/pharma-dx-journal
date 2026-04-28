@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snowflake × OMOP CDM で実現するRWE基盤構築2026 | 製薬DXジャーナル</title>
+<meta name="description" content="Snowflake上にOMOP Common Data Model（CDM）を載せたRWE（Real World Evidence）基盤の構築アプローチを、ELT設計、Vocabulary管理、Cohort定義、OHDSIツール統合の観点で2026年Q2時点で整理します。">
+<link rel="canonical" href="https://pharmaworkerka.github.io/pharma-dx-journal/articles/2026-04-29-snowflake-omop-cdm-rwe-platform.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Snowflake × OMOP CDM で実現するRWE基盤構築2026">
+<meta property="og:description" content="Snowflake上にOMOP CDMを構築するRWE基盤の設計アプローチをまとめます。">
+<meta property="og:image" content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&auto=format&q=80">
+<meta property="og:url" content="https://pharmaworkerka.github.io/pharma-dx-journal/articles/2026-04-29-snowflake-omop-cdm-rwe-platform.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&auto=format&q=80">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Snowflake × OMOP CDM で実現するRWE基盤構築2026","image":"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&auto=format&q=80","datePublished":"2026-04-29","dateModified":"2026-04-29","author":{"@type":"Organization","name":"製薬DXジャーナル"},"publisher":{"@type":"Organization","name":"製薬DXジャーナル"},"mainEntityOfPage":"https://pharmaworkerka.github.io/pharma-dx-journal/articles/2026-04-29-snowflake-omop-cdm-rwe-platform.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"なぜSnowflakeがRWE基盤に向いているのですか？","acceptedAnswer":{"@type":"Answer","text":"ストレージとコンピュートが分離されており、複数の解析チームが独立にスケールできること、Time Travelやゼロコピークローン等の機能によりデータ系譜管理がしやすいことが利点として挙げられます。"}},{"@type":"Question","name":"OMOP CDMのVocabularyは自前で持つ必要がありますか？","acceptedAnswer":{"@type":"Answer","text":"OHDSIが配布する標準Vocabularyをロードして使うのが一般的です。日本固有のコード体系（レセプト電算処理コード、JLAC10/11等）はExtensionまたはマッピングテーブルで対応します。"}},{"@type":"Question","name":"OHDSIツールはSnowflakeで動きますか？","acceptedAnswer":{"@type":"Answer","text":"ATLAS、HADES（R packages）はSnowflake向けの接続が公式または事実上サポートされており、SqlRender経由で標準SQLをSnowflake方言に変換して実行する構成が広く使われています。"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"製薬DXジャーナル","item":"https://pharmaworkerka.github.io/pharma-dx-journal/"},{"@type":"ListItem","position":2,"name":"記事","item":"https://pharmaworkerka.github.io/pharma-dx-journal/index.html"},{"@type":"ListItem","position":3,"name":"Snowflake × OMOP CDM RWE基盤"}]}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head><body>
+<div data-tag="ml-pr-bar-v1" style="background:#fef3c7;color:#78350f;padding:6px 12px;text-align:center;font-size:12px;border-bottom:1px solid #fcd34d;font-family:system-ui,sans-serif;line-height:1.4">当サイトの記事には広告（アフィリエイトリンク）が含まれる場合があります。掲載順位や紹介内容は当サイトの編集方針に基づきます。</div>
+<nav class="filter-nav"><a href="../index.html" class="filter-btn">← トップに戻る</a></nav>
+<main class="article-body">
+<img class="article-hero-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop&auto=format&q=80" alt="Snowflake × OMOP CDM RWE基盤構築">
+<p class="article-meta">📅 2026-04-29 · 🏷️ 製薬DX</p>
+<h1>Snowflake × OMOP CDM で実現するRWE基盤構築2026</h1>
+<p>RWE（Real World Evidence）の活用が安全性監視・市販後調査・適応拡大エビデンスで広がる中、社内データ基盤の標準化が課題となっています。OMOP Common Data Model（CDM）はOHDSIコミュニティが整備する標準スキーマで、世界中の医療データ分析基盤で採用されており、SnowflakeのようなクラウドDWH上に載せることで企業横断的なRWE基盤を実現できます。本稿では2026年Q2時点での実装アプローチを整理します。</p>
+
+<h2>なぜSnowflake × OMOP CDMなのか</h2>
+<p>RWE基盤に求められる要件は、(1)多様なデータソース（レセプト、DPC、EHR、患者レジストリ等）の取り込み、(2)規模に対するスケーラビリティ、(3)データ系譜・再現性の担保、(4)研究者・データサイエンティストの自由なアクセス、です。Snowflakeはストレージとコンピュートを分離した構造で、複数チームが独立にスケールできること、Time Travelやゼロコピークローンによる過去断面の再現性確保、Secure Data Sharingによる外部連携が容易な点が、RWE要件にマッチします。</p>
+<p>OMOP CDMはこの上にスキーマとして載せる「共通言語」で、世界中で確立された解析手法・ツールを再利用できる利点があります。Population-Level Cohort Studyの実装ノウハウ、自然言語処理パイプライン、定義済みCohort等のアセットがOHDSIエコシステムから入手可能です。</p>
+
+<h2>ELT設計：ソース→OMOPへの変換</h2>
+<p>RWEの前処理は、ソースデータをOMOP CDMに変換するETLが要となります。実務的にはdbt（data build tool）でELTパイプラインを記述する企業が増えています。代表的な変換テーブルは以下です。</p>
+<ul>
+<li><b>PERSON：</b>患者基本情報。性別・誕生年月・人種等を標準コードにマッピング。</li>
+<li><b>VISIT_OCCURRENCE / VISIT_DETAIL：</b>診療接触単位。入院・外来・救急の区分けが論点。</li>
+<li><b>CONDITION_OCCURRENCE：</b>疾患・診断。レセプトの傷病名コードを正しいCONCEPT_IDにマッピング。</li>
+<li><b>DRUG_EXPOSURE：</b>薬剤投与。レセプト電算処理コード→RxNorm/SNOMED経由でOMOP標準Conceptへ。</li>
+<li><b>PROCEDURE_OCCURRENCE / MEASUREMENT：</b>手術・処置・検査値。JLAC10/11、JJ1017コードのマッピングが必要。</li>
+</ul>
+<p>変換ロジックは試行錯誤を伴うため、dbtのテストとSnowflake Time Travelを組み合わせ、変換ルール変更時の影響をすぐ検証できる体制を作ることが重要です。</p>
+
+<h2>Vocabulary管理の論点</h2>
+<p>OMOP CDMの強みは標準Vocabulary（OHDSI Athenaから入手）に依存していますが、日本固有のコード体系（レセプト電算処理コード、JLAC10/11、JJ1017、ICD-10第10版日本版等）は標準Vocabularyに含まれない部分があります。これをどうマッピングするかは各社の腕の見せ所です。</p>
+<p>実装パターンは、(1)既存のオープンソースマッピング（先行事例の公開リソース）を初期インポート、(2)ドメイン専門家（医師・薬剤師）によるレビューでマッピング精度を検証、(3)Vocabulary Extensionとしてカスタムテーブルに自社マッピングを保持、の3段が標準です。Vocabularyの版管理（OMOPメジャー・マイナー版、社内追加版）をSnowflake側のスキーマで分離管理すると、後の解析再現性が担保しやすくなります。</p>
+
+<h2>Cohort定義とOHDSIツール統合</h2>
+<p>OMOP CDMが整備された後は、ATLAS（Webツール）でCohortを定義し、HADES（R packages）でPopulation-Level Estimation、Patient-Level Prediction、Characterizationを実行できます。SnowflakeはOHDSIのSqlRenderからの方言サポート対象で、ATLAS生成SQLを大きな改変なしに動かせます。</p>
+<p>大規模Cohort解析ではコンピュートをスケール、定型レポート集計はSmall Warehouse、というようにSnowflakeのWarehouse分割でコスト最適化が可能です。Cohortの定義（Concept Set、ロジック）はGitで版管理し、ATLAS Phenotype Library等の標準Cohortを起点に社内拡張するのが効率的です。</p>
+
+<h2>セキュリティとガバナンス</h2>
+<p>RWE基盤はPHI（保護対象保健情報）に該当するデータを扱うため、ガバナンス整備が必須です。Snowflake上ではDynamic Data MaskingとRow Access Policyを使い、ロールベースで列・行レベルのアクセス制御を実装します。Audit Logでアクセス履歴を保持し、研究プロジェクト単位でのアクセス権付与・剥奪フローをSOPに落とし込みます。</p>
+<p>個人情報保護法、次世代医療基盤法（医療分野の研究開発に資するための匿名加工医療情報に関する法律）など日本固有の枠組みへの適合確認、ICHや各種ガイドラインに沿ったData Quality評価のフレーム整備も並行して進める必要があります。</p>
+
+<h2>まとめ</h2>
+<p>Snowflake × OMOP CDMのRWE基盤は、グローバル標準のスキーマ・ツールエコシステムと、クラウドDWHのスケーラビリティ・運用容易性を組み合わせた現実的な構成です。2026年Q2時点ではETL（dbt等）、Vocabularyマッピング、ATLAS/HADES統合、ガバナンスの4軸を順次整備することがロードマップとなります。最初は1ソース・小さいCohortから始め、社内アセットを蓄積しながらスケールさせる進め方がリスクを抑えやすいでしょう。</p>
+
+<p style="color:#6b7280;font-size:0.8rem;margin-top:40px;">本記事は情報提供を目的としており、規制要件の最終確認は各国規制当局の公式ドキュメントを参照してください。実務適用の判断は読者の責任で行ってください。</p>
+<a href="../index.html" class="back-link">← 他の記事を見る</a>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<p class="copyright">© 2026 製薬DXジャーナル</p>
+</div></footer>
+</body></html>
